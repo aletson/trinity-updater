@@ -61,7 +61,7 @@ cd build || exit 1
 if [[ $REBUILD_MAPS == "true" ]]; then
   cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DTOOLS=1
 else
-	cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib
+  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib
 fi
 make && make install
 
@@ -81,13 +81,13 @@ if [[ $REBUILD_MAPS == "true" ]]; then
 	./vmap4extractor
 	mkdir vmaps
 	./vmap4assembler Buildings vmaps
-	mkdir mmaps
-	./mmaps_generator
-	mkdir $SERVERDIR/data
-	\cp -r dbc maps mmaps vmaps $SERVERDIR/data
-	cd $SERVERDIR/bin
+  mkdir mmaps
+  ./mmaps_generator
+  mkdir $SERVERDIR/data
+  \cp -r dbc maps mmaps vmaps $SERVERDIR/data
+  cd $SERVERDIR/bin
 else
-	\cp -r $BACKUPDIR/data $SERVERDIR
+  \cp -r $BACKUPDIR/data $SERVERDIR
 fi
 
 # Start updated server
