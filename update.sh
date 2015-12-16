@@ -8,19 +8,19 @@
 
 # Init variables
 while [[ $# -gt 1 ]]; do
-	key="$1"
-	case $key in
-		--maps)
-			REBUILD_MAPS="$2"
-			shift
-			;;
-		*)
-			echo "Unknown parameter passed in $1. Please review the accepted parameters, currently as follows:"
-			echo "--maps"
-			exit 1
-			;;
-	esac
-	shift
+  key="$1"
+  case $key in
+    --maps)
+      REBUILD_MAPS="$2"
+      shift
+      ;;
+    *)
+      echo "Unknown parameter passed in $1. Please review the accepted parameters, currently as follows:"
+      echo "--maps"
+      exit 1
+      ;;
+    esac
+  shift
 done
 
 # These are required parameters.
@@ -43,7 +43,7 @@ USE_IFTTT="true"
 IFTTT_KEY="my-ifttt-maker-key"
 
 if [[ $USE_IFTTT == "true" ]]; then
-curl -X POST https://maker.ifttt.com/trigger/maintenance_alert_start/with/key/${IFTTT_KEY}
+  curl -X POST https://maker.ifttt.com/trigger/maintenance_alert_start/with/key/${IFTTT_KEY}
 fi
 
 # shut down existing server
@@ -71,16 +71,16 @@ cp $BACKUPDIR/etc/authserver.conf $SERVERDIR/etc/authserver.conf
 cd $SERVERDIR/bin || exit 1
 # Move maps in, either build new or use backup
 if [[ $REBUILD_MAPS == "true" ]]; then
-	\cp mapextractor $WOWDIR
-	\cp mmaps_generator $WOWDIR
-	\cp vmap4assembler $WOWDIR
-	\cp vmap4extractor $WOWDIR
-	cd $WOWDIR || exit 1
-	rm -rf dbc maps mmaps vmaps Buildings
-	./mapextractor
-	./vmap4extractor
-	mkdir vmaps
-	./vmap4assembler Buildings vmaps
+  \cp mapextractor $WOWDIR
+  \cp mmaps_generator $WOWDIR
+  \cp vmap4assembler $WOWDIR
+  \cp vmap4extractor $WOWDIR
+  cd $WOWDIR || exit 1
+  rm -rf dbc maps mmaps vmaps Buildings
+  ./mapextractor
+  ./vmap4extractor
+  mkdir vmaps
+  ./vmap4assembler Buildings vmaps
   mkdir mmaps
   ./mmaps_generator
   mkdir $SERVERDIR/data
