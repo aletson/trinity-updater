@@ -6,6 +6,7 @@
 # (Directly/Cron): ./update.sh --maps true|false
 # (Jenkins): bash -xa update.sh --maps true|false
 # TODO: Check if src/tools has been modified in the retrieved Git updates and automatically detect whether maps need to be rebuilt.
+# TODO: Call https://github.com/TrinityCore/TrinityCore/tree/6.x/contrib/conf_merge to merge conf diffs
 
 # Init variables
 while [[ $# -gt 1 ]]; do
