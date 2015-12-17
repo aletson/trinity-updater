@@ -5,6 +5,7 @@
 # Call this script as follows:
 # (Directly/Cron): ./update.sh --maps true|false
 # (Jenkins): bash -xa update.sh --maps true|false
+# TODO: Check if src/tools has been modified in the retrieved Git updates and automatically detect whether maps need to be rebuilt.
 
 # Init variables
 while [[ $# -gt 1 ]]; do
