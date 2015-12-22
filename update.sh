@@ -49,13 +49,8 @@ if [[ $USE_IFTTT == "true" ]]; then
 fi
 
 # shut down existing server
-screen -S world -X stuff 'announce Server is shutting down in 1 minute for scheduled maintenance.'`echo -ne '\015'`
-screen -S world -X stuff 'server shutdown 60'`echo -ne '\015'`
-sleep 30s
-screen -S world -X stuff 'announce Server is shutting down in 30 seconds for scheduled maintenance.'`echo -ne '\015'`
-sleep 15s
-screen -S world -X stuff 'announce Server is shutting down in 15 seconds for scheduled maintenance.'`echo -ne '\015'`
-sleep 15s
+screen -S world -X stuff 'server shutdown 900'`echo -ne '\015'`
+sleep 15m
 screen -S auth -X quit
 
 #Pull new revision and build it
