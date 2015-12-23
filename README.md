@@ -10,6 +10,3 @@ A shell script for updating to a new revision of [TrinityCore](http://github.com
 ## Recommendations
 * If you have mail enabled on the server, you can use the script to send you maintenance alerts. I find `postfix` to be the easiest way to configure mail.
 * If you have an IFTTT account, you can use the script to trigger IFTTT Maker commands through web hook.
-
-## Limitations
-* Currently, the script still requires manual merge for new config files. It'll default to using the old ones. I'd like to implement [conf_merge](https://github.com/TrinityCore/TrinityCore/tree/3.3.5/contrib/conf_merge) but not sure how to do so in shell.
