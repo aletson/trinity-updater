@@ -90,6 +90,66 @@ if [[ $REBUILD_MAPS == "true" ]]; then
 else
   \cp -r $BACKUPDIR/data $SERVERDIR
 fi
+# Update configuration files
+while read -r newline; do
+    if [[ ${newline:0:1} == "#" ]] || [[ -z $newline ]]; then
+        continue
+    fi
+    newline_varname=`echo $newline | sed "s/ *$//" | cut -d '=' -f 1`
+    while read -r oldline; do
+        if [[ ${oldline:0:1} == "#" ]] || [[ -z $oldline ]]; then
+            continue
+        fi
+        oldline_varname=`echo $oldline | sed "s/ *$//" | cut -d '=' -f 1`
+        if [[ $newline_varname == $oldline_varname ]]; then
+            echo $oldline >> $SERVERDIR/etc/worldserver.conf.new
+            continue 2
+        fi
+    done < $SERVERDIR/etc/worldserver.conf
+    echo $newline >> $SERVERDIR/etc/worldserver.conf.new
+done < $SERVERDIR/etc/worldserver.conf.dist
+
+while read -r newline; do
+    if [[ ${newline:0:1} == "#" ]] || [[ -z $newline ]]; then
+        continue
+    fi
+    newline_varname=`echo $newline | sed "s/ *$//" | cut -d '=' -f 1`
+    while read -r oldline; do
+        if [[ ${oldline:0:1} == "#" ]] || [[ -z $oldline ]]; then
+            continue
+        fi
+        oldline_varname=`echo $oldline | sed "s/ *$//" | cut -d '=' -f 1`
+        if [[ $newline_varname == $oldline_varname ]]; then
+            echo $oldline >> $SERVERDIR/etc/authserver.conf.new
+            continue 2
+        fi
+    done < $SERVERDIR/etc/authserver.conf
+    echo $newline >> $SERVERDIR/etc/authserver.conf.new
+done < $SERVERDIR/etc/authserver.conf.dist
+
+cd $SERVERDIR/etc || exit 1
+mv worldserver.conf worldserver.conf.old
+mv worldserver.conf.new worldserver.conf
+mv authserver.conf authserver.conf.old
+mv authserver.conf.new authserver.conf
+
+while read -r newline; do
+    if [[ ${newline:0:1} == "#" ]] || [[ -z $newline ]]; then
+        continue
+    fi
+    newline_varname=`echo $newline | sed "s/ *$//" | cut -d '=' -f 1`
+    while read -r oldline; do
+        if [[ ${oldline:0:1} == "#" ]] || [[ -z $oldline ]]; then
+            continue
+        fi
+        oldline_varname=`echo $oldline | sed "s/ *$//" | cut -d '=' -f 1`
+        if [[ $newline_varname == $oldline_varname ]]; then
+            echo $oldline >> $SERVERDIR/etc/worldserver.conf.new
+            continue 2
+        fi
+    done < $SERVERDIR/etc/worldserver.conf
+    echo $newline >> $SERVERDIR/etc/worldserver.conf.new
+done < $SERVERDIR/etc/worldserver.conf.dist
 
 # Start updated server
 screen -AdmS world ./worldserver
