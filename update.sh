@@ -72,6 +72,7 @@ cp $BACKUPDIR/etc/authserver.conf $SERVERDIR/etc/authserver.conf
 cd $SERVERDIR/bin || exit 1
 # Move maps in, either build new or use backup
 if [[ $REBUILD_MAPS == "true" ]]; then
+  echo "Rebuilding maps..."
   \cp mapextractor $WOWDIR
   \cp mmaps_generator $WOWDIR
   \cp vmap4assembler $WOWDIR
@@ -88,9 +89,13 @@ if [[ $REBUILD_MAPS == "true" ]]; then
   \cp -r dbc maps mmaps vmaps $SERVERDIR/data
   cd $SERVERDIR/bin
 else
+  echo "Restoring maps..."
   \cp -r $BACKUPDIR/data $SERVERDIR
 fi
+
 # Update configuration files
+echo "Updating configuration files..."
+
 while read -r newline; do
     if [[ ${newline:0:1} == "#" ]] || [[ -z $newline ]]; then
         continue
@@ -133,23 +138,6 @@ mv worldserver.conf.new worldserver.conf
 mv authserver.conf authserver.conf.old
 mv authserver.conf.new authserver.conf
 
-while read -r newline; do
-    if [[ ${newline:0:1} == "#" ]] || [[ -z $newline ]]; then
-        continue
-    fi
-    newline_varname=`echo $newline | sed "s/ *$//" | cut -d '=' -f 1`
-    while read -r oldline; do
-        if [[ ${oldline:0:1} == "#" ]] || [[ -z $oldline ]]; then
-            continue
-        fi
-        oldline_varname=`echo $oldline | sed "s/ *$//" | cut -d '=' -f 1`
-        if [[ $newline_varname == $oldline_varname ]]; then
-            echo $oldline >> $SERVERDIR/etc/worldserver.conf.new
-            continue 2
-        fi
-    done < $SERVERDIR/etc/worldserver.conf
-    echo $newline >> $SERVERDIR/etc/worldserver.conf.new
-done < $SERVERDIR/etc/worldserver.conf.dist
 
 # Start updated server
 screen -AdmS world ./worldserver
