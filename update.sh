@@ -138,7 +138,7 @@ mv worldserver.conf.new worldserver.conf
 mv authserver.conf authserver.conf.old
 mv authserver.conf.new authserver.conf
 
-
+cd $SERVERDIR/bin || exit 1
 # Start updated server
 screen -AdmS world ./worldserver
 # Worldserver automatically updates the database, so we can ignore DB updates.
