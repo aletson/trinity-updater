@@ -7,7 +7,7 @@
 # (Jenkins): bash -xa update.sh --maps true|false
 # TODO: Check if src/tools has been modified in the retrieved Git updates and automatically detect whether maps need to be rebuilt.
 # TODO: Call https://github.com/TrinityCore/TrinityCore/tree/6.x/contrib/conf_merge to merge conf diffs
-
+set -e
 # Init variables
 while [[ $# -gt 1 ]]; do
   key="$1"
@@ -60,9 +60,9 @@ rm -rf $BACKUPDIR
 mv $SERVERDIR $BACKUPDIR
 cd build || exit 1
 if [[ $REBUILD_MAPS == "true" ]]; then
-  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DTOOLS=1
+  cmake3 ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DTOOLS=1
 else
-  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib
+  cmake3 ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib
 fi
 make && make install
 
