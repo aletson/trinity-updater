@@ -59,7 +59,7 @@ git pull
 rm -rf $BACKUPDIR
 mv $SERVERDIR $BACKUPDIR
 cd build || exit 1
-rm CMakeCache.txt -f
+rm * -rf
 if [[ $REBUILD_MAPS == "true" ]]; then
   cmake3 ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DTOOLS=1
 else
