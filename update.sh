@@ -74,10 +74,7 @@ cd $SERVERDIR/bin || exit 1
 # Move maps in, either build new or use backup
 if [[ $REBUILD_MAPS == "true" ]]; then
   echo "Rebuilding maps..."
-  \cp mapextractor $WOWDIR
-  \cp mmaps_generator $WOWDIR
-  \cp vmap4assembler $WOWDIR
-  \cp vmap4extractor $WOWDIR
+  \cp mapextractor mmaps_generator vmap4assembler vmap4extractor $WOWDIR
   cd $WOWDIR || exit 1
   rm -rf dbc maps mmaps vmaps Buildings
   ./mapextractor
