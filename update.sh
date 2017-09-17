@@ -29,11 +29,13 @@ done
 # BUILDDIR should be set to the root directory of the cloned TrinityCore repository.
 BUILDDIR="/home/trinity/TrinityCore/"
 # SERVERDIR should be set to the root directory where you would like the server to install.
-SERVERDIR="/home/trinity/server"
+SERVERDIR="/usr/local/bin/trinity"
 # BACKUPDIR should be set to the directory where you would like to make a backup of the previous server version.
 BACKUPDIR="/home/trinity/server_backup"
 # WOWDIR should be set to the directory with a WoW client install so that maps may be extracted.
 WOWDIR="/home/trinity/WoW335"
+# CONFDIR should be set to the configuration file directory, typically in /etc.
+CONFDIR="/etc/trinity/"
 
 # This script can be configured to send alerts to an email address. If you use this, make sure you configure SPF records for your domain to allow your TrinityCore server to send email.
 USE_EMAIL="true"
@@ -61,11 +63,11 @@ mv $SERVERDIR $BACKUPDIR
 cd build || exit 1
 rm * -rf
 if [[ $REBUILD_MAPS == "true" ]]; then
-  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DTOOLS=1
+  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DCONF_DIR=$CONFDIR -DTOOLS=1
 else
-  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib
+  cmake ../ -DCMAKE_INSTALL_PREFIX=$SERVERDIR -DLIBSDIR=$SERVERDIR/lib -DCONF_DIR=$CONFDIR
 fi
-make && make install
+make && make -j $(nproc) install
 
 #Move old configs back in
 cp $BACKUPDIR/etc/worldserver.conf $SERVERDIR/etc/worldserver.conf
