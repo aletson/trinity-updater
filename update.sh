@@ -1,6 +1,6 @@
 #!/bin/bash
 # update.sh
-# Author: Andrew Letson
+# Author: AJ Letson
 # Purpose: CI for TrinityCore deployment.
 # Call this script as follows:
 # (Directly/Cron): ./update.sh --maps true|false
